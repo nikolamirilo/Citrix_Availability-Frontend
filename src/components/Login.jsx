@@ -1,15 +1,24 @@
-import React from "react";
-import users from "../users.list";
+import React, { useState } from "react";
+import "./Login.css";
+import { useGlobalState } from "./../context/GlobalState";
 
 const Login = () => {
   const [email, setEmail] = useState("");
+  const { users, setCurrentUser } = useGlobalState();
   const handleLogin = () => {
-    users.map((item) => {
-      if (email !== item) {
-        alert("Wrong email");
-      } else {
+    let isAuthorized = false;
+    let nthUser = 0;
+    for (let i = 0; i < users.length; i++) {
+      if (email === users[i].email) {
+        isAuthorized = true;
+        nthUser = i;
       }
-    });
+    }
+    if (isAuthorized) {
+      setCurrentUser(users[nthUser].email);
+    } else {
+      alert("Unauthorized user");
+    }
   };
 
   return (

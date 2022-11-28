@@ -63,6 +63,10 @@
   flex-direction: row;
   gap: 1vw;
 }
+.content table tbody .left-cell-content p {
+  min-width: 30%;
+  text-align: left;
+}
 
 .content table td,
 .content table th {
@@ -118,7 +122,7 @@ input,
 select {
   border-radius: 5px;
   border: none;
-  padding: 0.5% 2%;
+  padding: 0.6% 2%;
 }
 button:focus,
 input:active {
@@ -174,6 +178,13 @@ h2 {
   }
   .content table {
     width: 98%;
+  }
+  button,
+  input,
+  select {
+    border-radius: 5px;
+    border: none;
+    padding: 1% 5%;
   }
   .add-account {
     flex-direction: column;

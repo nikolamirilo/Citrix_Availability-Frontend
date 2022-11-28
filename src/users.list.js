@@ -1,4 +1,4 @@
-const users = [
+export const users = [
   "vojtech.curda@adacta-fintech.com",
   "branko.surjancev@adacta-fintech.com",
   "nikola.mirilo@adacta-fintech.com",
