@@ -56,6 +56,13 @@
   font-size: 1.6rem;
   background-color: #393939;
 }
+.content table tbody .left-cell-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 1vw;
+}
 
 .content table td,
 .content table th {

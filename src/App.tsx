@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useReducer, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import { IoMdCheckmark } from "react-icons/io";
+import { MdOutlineClose } from "react-icons/md";
 
 interface Types {
   account: Object;
@@ -53,7 +55,16 @@ const App: React.FC = () => {
               data.map((item) => {
                 return (
                   <tr key={item._id}>
-                    <td>{item.username}</td>
+                    <td>
+                      <div className="left-cell-content">
+                        {item.isAvailable ? (
+                          <IoMdCheckmark color="green" size={30} />
+                        ) : (
+                          <MdOutlineClose color="red" size={30} />
+                        )}
+                        {item.username}
+                      </div>
+                    </td>
                     <td className="select">
                       <select
                         value={item.isAvailable ? "YES" : "NO"}
