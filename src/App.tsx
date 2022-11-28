@@ -2,11 +2,19 @@ import axios from "axios";
 import { useEffect, useReducer, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 
+interface Types {
+  account: Object;
+  username: String;
+  availability: Boolean;
+  item: Object;
+  updates: any;
+}
+
 const App: React.FC = () => {
   const [data, setData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
   const initialState = { username: "", availability: false };
-  const [account, setAccount] = useReducer<any>(
+  const [account, setAccount] = useReducer(
     (account, updates) => ({
       ...account,
       ...updates,
@@ -14,24 +22,18 @@ const App: React.FC = () => {
     initialState
   );
   const getData = async () => {
-    await axios.get("http://localhost:5000/accounts").then((response) => {
+    await axios.get(import.meta.env.VITE_API_URL).then((response) => {
       const newData = response.data;
       setData(newData);
     });
   };
   useEffect(() => {
     getData();
+    console.log(data);
   }, [data]);
-
-  console.log(data);
 
   return (
     <div className="app">
-      {/* <img
-        src="https://th.bing.com/th/id/OIP._-4acER8opJEGWN4VUYL9gHaBc?pid=ImgDet&rs=1"
-        alt="Logo"
-        className="logo"
-      /> */}
       <div className="content">
         <h1>Citrix availability</h1>
         <table className="availability-table">
@@ -50,11 +52,18 @@ const App: React.FC = () => {
                     <td className="select">
                       <select
                         value={item.isAvailable ? "YES" : "NO"}
-                        onChange={(e) => {
-                          axios.patch(`http://localhost:5000/accounts/${item._id}`, {
-                            username: item.username,
-                            isAvailable: e.target.value === "NO" ? false : true,
-                          });
+                        onChange={async (e) => {
+                          await axios
+                            .patch(`${import.meta.env.VITE_API_URL}/${item._id}`, {
+                              username: item.username,
+                              isAvailable: e.target.value === "NO" ? false : true,
+                            })
+                            .then(() => {
+                              // window.location.reload();
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
                         }}
                       >
                         <option value="NO">NO</option>
@@ -62,8 +71,15 @@ const App: React.FC = () => {
                       </select>
                       <button
                         className="delete-button"
-                        onClick={() => {
-                          axios.delete(`http://localhost:5000/accounts/${item._id}`);
+                        onClick={async () => {
+                          await axios
+                            .delete(`${import.meta.env.VITE_API_URL}/${item._id}`)
+                            .then(() => {
+                              // window.location.reload();
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
                         }}
                       >
                         <AiOutlineDelete size={30} />
@@ -110,11 +126,18 @@ const App: React.FC = () => {
                 <option value="YES">YES</option>
               </select>
               <button
-                onClick={() => {
-                  axios.post(`http://localhost:5000/accounts`, {
-                    username: account.username,
-                    isAvailable: account.availability,
-                  });
+                onClick={async () => {
+                  await axios
+                    .post(`${import.meta.env.VITE_API_URL}`, {
+                      username: account.username,
+                      isAvailable: account.availability,
+                    })
+                    .then(() => {
+                      // window.location.reload();
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
                 }}
               >
                 Add Account
