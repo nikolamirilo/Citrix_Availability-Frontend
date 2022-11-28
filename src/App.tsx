@@ -22,10 +22,15 @@ const App: React.FC = () => {
     initialState
   );
   const getData = async () => {
-    await axios.get(import.meta.env.VITE_API_URL).then((response) => {
-      const newData = response.data;
-      setData(newData);
-    });
+    await axios
+      .get(import.meta.env.VITE_API_URL)
+      .then((response) => {
+        const newData = response.data;
+        setData(newData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   useEffect(() => {
     getData();
