@@ -112,7 +112,7 @@ const Content: React.FC = () => {
                         value={item.isAvailable ? "YES" : "NO"}
                         onChange={async (e) => {
                           await axios
-                            .patch(`${import.meta.env.VITE_API_URL}/${item._id}`, {
+                            .patch(`${import.meta.env.VITE_API_URL}/accounts/${item._id}`, {
                               username: item.username,
                               isAvailable: e.target.value === "NO" ? false : true,
                             })
@@ -133,7 +133,7 @@ const Content: React.FC = () => {
                         className="delete-button"
                         onClick={async () => {
                           await axios
-                            .delete(`${import.meta.env.VITE_API_URL}/${item._id}`)
+                            .delete(`${import.meta.env.VITE_API_URL}/accounts/${item._id}`)
                             .then(() => {
                               // window.location.reload();
                             })
@@ -192,7 +192,7 @@ const Content: React.FC = () => {
             <button
               onClick={async () => {
                 await axios
-                  .post(`${import.meta.env.VITE_API_URL}`, {
+                  .post(`${import.meta.env.VITE_API_URL}/accounts`, {
                     username: account.username,
                     isAvailable: account.availability,
                   })

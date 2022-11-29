@@ -14,7 +14,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const getAllUsers = async () => {
     await axios
-      .get("https://citrix-availability.up.railway.app/users")
+      .get(`${import.meta.env.VITE_API_URL}/users`)
       .then((response) => {
         setUsers(response.data);
       })
@@ -24,7 +24,7 @@ export const GlobalStateProvider = ({ children }) => {
   };
   const getData = async () => {
     await axios
-      .get(import.meta.env.VITE_API_URL)
+      .get(`${import.meta.env.VITE_API_URL}/accounts`)
       .then((response) => {
         const newData = response.data;
         setData(newData);
