@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Login.css";
 import { useGlobalState } from "./../context/GlobalState";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +23,8 @@ const Login = () => {
 
   return (
     <div className="login">
-      Login with your email:
+      <h2> Login with your email:</h2>
+
       <input
         type="email"
         placeholder="Enter your business email"

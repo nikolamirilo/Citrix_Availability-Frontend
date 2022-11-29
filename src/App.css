@@ -64,8 +64,9 @@
   gap: 1vw;
 }
 .content table tbody .left-cell-content p {
-  min-width: 30%;
-  text-align: left;
+  text-align: center;
+  word-break: break-all;
+  width: 90%;
 }
 
 .content table td,
@@ -76,6 +77,7 @@
   text-align: center;
   font-size: 1.5rem;
 }
+
 .content table tbody tr td select {
   background-color: transparent;
   font-size: 1.5rem;
@@ -86,13 +88,7 @@
   appearance: none;
 }
 
-.content table tbody tr td:last-child {
-  position: relative;
-}
 .delete-button {
-  position: absolute;
-  right: 1vw;
-  top: 0.5vh;
   background-color: transparent;
   color: rgb(243, 76, 76);
   cursor: pointer;
@@ -151,7 +147,7 @@ input {
 }
 .add-account button {
   font-size: 1.4rem;
-  width: 20%;
+  width: 24%;
 }
 .add-account select {
   font-size: 1.4rem;
@@ -164,9 +160,14 @@ h2 {
   text-align: center;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1400px) {
   .content {
-    width: 75%;
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .content {
+    width: 90%;
   }
 }
 @media screen and (max-width: 600px) {
@@ -174,10 +175,17 @@ h2 {
     background-size: contain;
   }
   .content {
-    width: 98%;
+    width: 99%;
   }
   .content table {
-    width: 98%;
+    width: 99%;
+  }
+  .content h1 {
+    margin-top: 10vh;
+  }
+  .content table tr td,
+  .content table tr td select {
+    font-size: 1.2rem !important;
   }
   button,
   input,
@@ -193,7 +201,7 @@ h2 {
     margin-bottom: 10vh;
   }
   .add-account input {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     width: 100%;
   }
   .add-account button {
@@ -201,7 +209,7 @@ h2 {
     width: 100%;
   }
   .add-account select {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     width: 100%;
   }
 }

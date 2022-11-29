@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useReducer, useState } from "react";
-import { AiOutlineDelete, AiFillMinusCircle, AiFillCheckCircle } from "react-icons/ai";
-import { useGlobalState } from "./context/GlobalState.jsx";
+import { AiFillCheckCircle, AiFillMinusCircle, AiOutlineDelete } from "react-icons/ai";
+import { BiLogOutCircle } from "react-icons/bi";
 import Login from "./components/Login.jsx";
+import { useGlobalState } from "./context/GlobalState.jsx";
 
 interface Types {
   account: Object;
@@ -15,7 +16,7 @@ interface Types {
 const App: React.FC = () => {
   const [data, setData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
-  const { currentUser } = useGlobalState();
+  const { currentUser, setCurrentUser } = useGlobalState();
   const initialState = { username: "", availability: false };
   const [account, setAccount] = useReducer(
     (account, updates) => ({
@@ -46,13 +47,44 @@ const App: React.FC = () => {
         <Login />
       ) : (
         <div className="content">
-          <h2>Hi {currentUser}</h2>
+          <h2
+            style={{
+              textTransform: "capitalize",
+              position: "absolute",
+              top: "2vh",
+              left: "2vw",
+              fontSize: "1.6rem",
+            }}
+          >
+            Hi, {currentUser.split(".", 1)}
+          </h2>
+
+          <button
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "3px",
+              textTransform: "capitalize",
+              position: "absolute",
+              top: "2vh",
+              right: "2vw",
+              fontSize: "1.2rem",
+            }}
+            onClick={() => {
+              setCurrentUser("");
+            }}
+          >
+            Logout {"  "} <BiLogOutCircle size={25} />
+          </button>
           <h1>Citrix availability</h1>
           <table className="availability-table">
             <thead>
               <tr className="table-heading">
+                <td></td>
                 <td>Username</td>
                 <td>Is Available</td>
+                <td></td>
               </tr>
             </thead>
             <tbody>
@@ -61,18 +93,30 @@ const App: React.FC = () => {
                   return (
                     <tr key={item._id}>
                       <td>
+                        {item.isAvailable ? (
+                          <AiFillCheckCircle
+                            size={30}
+                            style={{
+                              color: "#fff",
+                              fill: "green",
+                              background: "#fff",
+                              borderRadius: "100%",
+                            }}
+                          />
+                        ) : (
+                          <AiFillMinusCircle
+                            size={30}
+                            style={{
+                              color: "#fff",
+                              fill: "red",
+                              background: "#fff",
+                              borderRadius: "100%",
+                            }}
+                          />
+                        )}
+                      </td>
+                      <td>
                         <div className="left-cell-content">
-                          {item.isAvailable ? (
-                            <AiFillCheckCircle
-                              size={30}
-                              style={{ color: "#fff", fill: "green", background: "#fff", borderRadius: "100%" }}
-                            />
-                          ) : (
-                            <AiFillMinusCircle
-                              size={30}
-                              style={{ color: "#fff", fill: "red", background: "#fff", borderRadius: "100%" }}
-                            />
-                          )}
                           <p> {item.username}</p>
                         </div>
                       </td>
@@ -96,6 +140,8 @@ const App: React.FC = () => {
                           <option value="NO">NO</option>
                           <option value="YES">YES</option>
                         </select>
+                      </td>
+                      <td>
                         <button
                           className="delete-button"
                           onClick={async () => {
