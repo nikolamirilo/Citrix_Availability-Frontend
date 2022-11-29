@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const GlobalState = createContext();
 
@@ -16,7 +16,6 @@ export const GlobalStateProvider = ({ children }) => {
       .then((response) => {
         const newData = response.data;
         setUsers(newData);
-        console.log(users);
       })
       .catch((error) => {
         console.log(error);
@@ -27,5 +26,9 @@ export const GlobalStateProvider = ({ children }) => {
     getData();
   }, [users]);
 
-  return <GlobalState.Provider value={{ currentUser, setCurrentUser, users }}>{children}</GlobalState.Provider>;
+  return (
+    <GlobalState.Provider value={{ currentUser, setCurrentUser, users }}>
+      {children}
+    </GlobalState.Provider>
+  );
 };
