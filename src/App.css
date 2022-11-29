@@ -84,7 +84,7 @@
   border: none;
   color: #fff;
   text-align: center;
-  cursor: pointer;
+  cursor: pointer !important;
   appearance: none;
 }
 
@@ -100,7 +100,7 @@
 .content table tbody tr td select option {
   color: #000;
   text-align: center;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 .content table tbody tr td select:focus {
   outline: none;
@@ -112,6 +112,7 @@
 button {
   background-color: rgb(9, 158, 227);
   color: #fff;
+  cursor: pointer !important;
 }
 button,
 input,
@@ -128,6 +129,9 @@ input:active {
 select,
 input {
   outline: none;
+}
+select {
+  cursor: pointer;
 }
 .add-account {
   width: 80%;

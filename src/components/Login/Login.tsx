@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useGlobalState } from "./../context/GlobalState";
+import { useState } from "react";
+import { useGlobalState } from "../../context/GlobalState";
 import "./Login.css";
 
 const Login = () => {
