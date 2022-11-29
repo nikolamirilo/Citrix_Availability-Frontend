@@ -44,6 +44,7 @@ const Content: React.FC = () => {
         className="logout"
         onClick={() => {
           setCurrentUser("");
+          localStorage.removeItem("currentUser");
         }}
       >
         Logout {"  "} <BiLogOutCircle size={25} />

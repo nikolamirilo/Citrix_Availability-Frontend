@@ -37,7 +37,7 @@ export const GlobalStateProvider = ({ children }) => {
   //Set currentUser as one save in localStorage
   useEffect(() => {
     const currUser = localStorage.getItem("currentUser");
-    if (currUser !== "" || !currUser !== undefined || currUser !== null) {
+    if (currUser !== "" || !currUser !== undefined || currUser !== null || currUser !== "Null") {
       setCurrentUser(currUser);
     } else {
       setCurrentUser("");
@@ -47,6 +47,8 @@ export const GlobalStateProvider = ({ children }) => {
     getAllUsers();
   }, [users]);
 
+  console.log(data);
+  console.log(users);
   return (
     <GlobalState.Provider value={{ currentUser, setCurrentUser, users, data, getData, loaded }}>
       {children}
