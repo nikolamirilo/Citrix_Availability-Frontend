@@ -3,8 +3,8 @@ import { useEffect, useReducer, useState } from "react";
 import { AiFillCheckCircle, AiFillMinusCircle, AiOutlineDelete } from "react-icons/ai";
 import { BiLogOutCircle } from "react-icons/bi";
 import { useGlobalState } from "../../context/GlobalState.jsx";
+import Loader from "../Loader/Loader.js";
 import "./Content.css";
-
 interface Types {
   account: Object;
   username: String;
@@ -14,7 +14,6 @@ interface Types {
 }
 
 const Content: React.FC = () => {
-  const [data, setData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
   const { currentUser, setCurrentUser } = useGlobalState();
   const initialState = { username: "", availability: false };
@@ -25,21 +24,12 @@ const Content: React.FC = () => {
     }),
     initialState
   );
-  const getData = async () => {
-    await axios
-      .get(import.meta.env.VITE_API_URL)
-      .then((response) => {
-        const newData = response.data;
-        setData(newData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const { data, getData, loaded } = useGlobalState();
 
   useEffect(() => {
     getData();
   }, [data]);
+  localStorage.setItem("currentUser", currentUser);
 
   return (
     <div className="content">
@@ -52,7 +42,7 @@ const Content: React.FC = () => {
           fontSize: "1.6rem",
         }}
       >
-        Hi, {currentUser.split(".", 1)}
+        Hi, {currentUser && currentUser.split(".", 1)}
       </h2>
 
       <button
@@ -74,91 +64,95 @@ const Content: React.FC = () => {
         Logout {"  "} <BiLogOutCircle size={25} />
       </button>
       <h1>Citrix availability</h1>
-      <table className="availability-table">
-        <thead>
-          <tr className="table-heading">
-            <td></td>
-            <td>Username</td>
-            <td>Is Available</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {data !== null &&
-            data.map((item) => {
-              return (
-                <tr key={item._id}>
-                  <td>
-                    {item.isAvailable ? (
-                      <AiFillCheckCircle
-                        size={30}
-                        style={{
-                          color: "#fff",
-                          fill: "green",
-                          background: "#fff",
-                          borderRadius: "100%",
+      {loaded ? (
+        <table className="availability-table">
+          <thead>
+            <tr className="table-heading">
+              <td></td>
+              <td>Username</td>
+              <td>Is Available</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {data !== null &&
+              data.map((item) => {
+                return (
+                  <tr key={item._id}>
+                    <td>
+                      {item.isAvailable ? (
+                        <AiFillCheckCircle
+                          size={30}
+                          style={{
+                            color: "#fff",
+                            fill: "green",
+                            background: "#fff",
+                            borderRadius: "100%",
+                          }}
+                        />
+                      ) : (
+                        <AiFillMinusCircle
+                          size={30}
+                          style={{
+                            color: "#fff",
+                            fill: "red",
+                            background: "#fff",
+                            borderRadius: "100%",
+                          }}
+                        />
+                      )}
+                    </td>
+                    <td>
+                      <div className="left-cell-content">
+                        <p> {item.username}</p>
+                      </div>
+                    </td>
+                    <td className="select">
+                      <select
+                        value={item.isAvailable ? "YES" : "NO"}
+                        onChange={async (e) => {
+                          await axios
+                            .patch(`${import.meta.env.VITE_API_URL}/${item._id}`, {
+                              username: item.username,
+                              isAvailable: e.target.value === "NO" ? false : true,
+                            })
+                            .then(() => {
+                              // window.location.reload();
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
                         }}
-                      />
-                    ) : (
-                      <AiFillMinusCircle
-                        size={30}
-                        style={{
-                          color: "#fff",
-                          fill: "red",
-                          background: "#fff",
-                          borderRadius: "100%",
+                      >
+                        <option value="NO">NO</option>
+                        <option value="YES">YES</option>
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        className="delete-button"
+                        onClick={async () => {
+                          await axios
+                            .delete(`${import.meta.env.VITE_API_URL}/${item._id}`)
+                            .then(() => {
+                              // window.location.reload();
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
                         }}
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <div className="left-cell-content">
-                      <p> {item.username}</p>
-                    </div>
-                  </td>
-                  <td className="select">
-                    <select
-                      value={item.isAvailable ? "YES" : "NO"}
-                      onChange={async (e) => {
-                        await axios
-                          .patch(`${import.meta.env.VITE_API_URL}/${item._id}`, {
-                            username: item.username,
-                            isAvailable: e.target.value === "NO" ? false : true,
-                          })
-                          .then(() => {
-                            // window.location.reload();
-                          })
-                          .catch((error) => {
-                            console.log(error);
-                          });
-                      }}
-                    >
-                      <option value="NO">NO</option>
-                      <option value="YES">YES</option>
-                    </select>
-                  </td>
-                  <td>
-                    <button
-                      className="delete-button"
-                      onClick={async () => {
-                        await axios
-                          .delete(`${import.meta.env.VITE_API_URL}/${item._id}`)
-                          .then(() => {
-                            // window.location.reload();
-                          })
-                          .catch((error) => {
-                            console.log(error);
-                          });
-                      }}
-                    >
-                      <AiOutlineDelete size={30} />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+                      >
+                        <AiOutlineDelete size={30} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      ) : (
+        <Loader />
+      )}
       <button
         className="add-button"
         onClick={() => {

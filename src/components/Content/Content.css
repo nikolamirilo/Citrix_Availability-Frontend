@@ -1,0 +1,159 @@
+.content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  gap: 5vh;
+  width: 60%;
+  min-height: 70vh;
+  height: fit-content;
+}
+.content h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  text-shadow: 2px 2px darkblue;
+  text-align: center;
+}
+.content table {
+  border-collapse: collapse;
+  height: fit-content;
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.556);
+  border-radius: 15px;
+}
+
+.content table .table-heading {
+  font-weight: 600;
+  font-size: 1.6rem;
+  background-color: #393939;
+}
+.content table tbody .left-cell-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 1vw;
+}
+.content table tbody .left-cell-content p {
+  text-align: center;
+  word-break: break-all;
+  width: 90%;
+}
+
+.content table td,
+.content table th {
+  border: 2px solid #fff;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.content table tbody tr td select {
+  background-color: transparent;
+  font-size: 1.5rem;
+  border: none;
+  color: #fff;
+  text-align: center;
+  cursor: pointer !important;
+  appearance: none;
+}
+
+.delete-button {
+  background-color: transparent;
+  color: rgb(243, 76, 76);
+  cursor: pointer;
+}
+
+.content table tbody tr .select::after {
+  content: "\2B9F";
+}
+.content table tbody tr td select option {
+  color: #000;
+  text-align: center;
+  cursor: pointer !important;
+}
+.content table tbody tr td select:focus {
+  outline: none;
+}
+
+.add-button {
+  font-size: 1.5rem;
+}
+
+.add-account {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 2px solid #fff;
+  padding: 3% 2%;
+  background-color: rgba(0, 0, 0, 0.556);
+}
+
+.add-account input {
+  font-size: 1.4rem;
+  width: 50%;
+}
+.add-account button {
+  font-size: 1.4rem;
+  width: 24%;
+}
+.add-account select {
+  font-size: 1.4rem;
+  width: 20%;
+}
+
+@media screen and (max-width: 1400px) {
+  .content {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .content {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .app {
+    background-size: contain;
+  }
+  .content {
+    width: 99%;
+  }
+  .content table {
+    width: 99%;
+  }
+  .content h1 {
+    margin-top: 10vh;
+  }
+  .content table tr td,
+  .content table tr td select {
+    font-size: 1.2rem !important;
+  }
+  .add-account {
+    flex-direction: column;
+    gap: 5vh;
+    width: 98%;
+    margin-bottom: 10vh;
+  }
+  .add-account input {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  .add-account button {
+    font-size: 1.4rem;
+    width: 100%;
+  }
+  .add-account select {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .content {
+    width: 98%;
+  }
+}

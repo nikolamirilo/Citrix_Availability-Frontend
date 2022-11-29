@@ -4,7 +4,7 @@ import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const { users, setCurrentUser } = useGlobalState();
+  const { users, setCurrentUser, currentUser } = useGlobalState();
   const handleLogin = () => {
     let isAuthorized = false;
     let nthUser = 0;
@@ -23,8 +23,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <h2> Login with your email:</h2>
-
+      <h2> Login with your email</h2>
       <input
         type="email"
         placeholder="Enter your business email"
