@@ -29,34 +29,17 @@ const Content: React.FC = () => {
   useEffect(() => {
     getData();
   }, [data]);
+
   localStorage.setItem("currentUser", currentUser);
 
   return (
     <div className="content">
-      <h2
-        style={{
-          textTransform: "capitalize",
-          position: "absolute",
-          top: "2vh",
-          left: "2vw",
-          fontSize: "1.6rem",
-        }}
-      >
-        Hi, {currentUser && currentUser.split(".", 1)}
+      <h2 className="greeting">
+        Hi, {currentUser && currentUser !== "" && currentUser.split(".", 1)}
       </h2>
 
       <button
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "3px",
-          textTransform: "capitalize",
-          position: "absolute",
-          top: "2vh",
-          right: "2vw",
-          fontSize: "1.2rem",
-        }}
+        className="logout"
         onClick={() => {
           setCurrentUser("");
         }}
@@ -81,29 +64,13 @@ const Content: React.FC = () => {
                   <tr key={item._id}>
                     <td>
                       {item.isAvailable ? (
-                        <AiFillCheckCircle
-                          size={30}
-                          style={{
-                            color: "#fff",
-                            fill: "green",
-                            background: "#fff",
-                            borderRadius: "100%",
-                          }}
-                        />
+                        <AiFillCheckCircle size={30} className="available" />
                       ) : (
-                        <AiFillMinusCircle
-                          size={30}
-                          style={{
-                            color: "#fff",
-                            fill: "red",
-                            background: "#fff",
-                            borderRadius: "100%",
-                          }}
-                        />
+                        <AiFillMinusCircle size={30} className="busy" />
                       )}
                     </td>
                     <td>
-                      <div className="left-cell-content">
+                      <div className="username">
                         <p> {item.username}</p>
                       </div>
                     </td>

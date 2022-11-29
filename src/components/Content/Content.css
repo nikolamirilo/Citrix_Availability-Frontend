@@ -9,6 +9,36 @@
   min-height: 70vh;
   height: fit-content;
 }
+.content table tbody tr td .available {
+  color: #fff;
+  fill: green;
+  background: #fff;
+  border-radius: 100%;
+}
+.content table tbody tr td .busy {
+  color: #fff;
+  fill: red;
+  background: #fff;
+  border-radius: 100%;
+}
+.content .greeting {
+  text-transform: capitalize;
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+  font-size: 1.6rem;
+}
+.content .logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  text-transform: capitalize;
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  font-size: 1.2rem;
+}
 .content h1 {
   font-size: 2.5rem;
   text-transform: uppercase;
@@ -28,14 +58,14 @@
   font-size: 1.6rem;
   background-color: #393939;
 }
-.content table tbody .left-cell-content {
+.content table tbody .username {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   gap: 1vw;
 }
-.content table tbody .left-cell-content p {
+.content table tbody .username p {
   text-align: center;
   word-break: break-all;
   width: 90%;
@@ -67,7 +97,7 @@
 }
 
 .content table tbody tr .select::after {
-  content: "\2B9F";
+  content: \2B9F;
 }
 .content table tbody tr td select option {
   color: #000;
