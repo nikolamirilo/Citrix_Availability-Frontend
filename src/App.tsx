@@ -6,9 +6,10 @@ const Login = React.lazy(() => import("./components/Login/Login.jsx"));
 
 const App: React.FC = () => {
   const { currentUser, setCurrentUser } = useGlobalState();
+  const usr = localStorage.getItem("currentUser");
   return (
     <div className="app">
-      {currentUser === "" ? (
+      {currentUser === "" && usr === null ? (
         <React.Suspense fallback={<Loader />}>
           <Login />
         </React.Suspense>

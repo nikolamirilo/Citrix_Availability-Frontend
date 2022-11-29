@@ -47,8 +47,6 @@ export const GlobalStateProvider = ({ children }) => {
     getAllUsers();
   }, [users]);
 
-  console.log(data);
-  console.log(users);
   return (
     <GlobalState.Provider value={{ currentUser, setCurrentUser, users, data, getData, loaded }}>
       {children}
