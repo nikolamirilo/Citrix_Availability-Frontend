@@ -34,7 +34,6 @@ const Content: React.FC = () => {
   if (currentUser && currentUser !== "" && currentUser !== null && currentUser !== undefined) {
     localStorage.setItem("currentUser", currentUser);
   }
-  console.log(data);
   return (
     <div className="content">
       <h2 className="greeting">
