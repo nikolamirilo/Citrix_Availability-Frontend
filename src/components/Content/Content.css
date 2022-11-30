@@ -97,7 +97,7 @@
 }
 
 .content table tbody tr .select::after {
-  content: \2B9F;
+  content: "\2B9F";
 }
 .content table tbody tr td select option {
   color: #000;
