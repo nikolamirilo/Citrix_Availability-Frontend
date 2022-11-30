@@ -15,7 +15,7 @@ interface Types {
 
 const Content: React.FC = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const { currentUser, setCurrentUser } = useGlobalState();
+  const { currentUser, setCurrentUser, setAuthorized } = useGlobalState();
   const initialState = { username: "", availability: false };
   const [account, setAccount] = useReducer(
     (account, updates) => ({
@@ -45,6 +45,7 @@ const Content: React.FC = () => {
         onClick={() => {
           setCurrentUser("");
           localStorage.removeItem("currentUser");
+          setAuthorized(false);
         }}
       >
         Logout {"  "} <BiLogOutCircle size={25} />

@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalState } from "../../context/GlobalState";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const { users, setCurrentUser, currentUser } = useGlobalState();
+  const { users, setCurrentUser, currentUser, setAuthorized } = useGlobalState();
+  console.log(users);
+  console.log(currentUser);
   const handleLogin = () => {
-    let isAuthorized = false;
     let nthUser = 0;
+    let isAuthorized = false;
     for (let i = 0; i < users.length; i++) {
       if (email === users[i].email) {
         isAuthorized = true;
         nthUser = i;
+        console.log(nthUser);
       }
     }
     if (isAuthorized) {
+      console.log(users);
       setCurrentUser(users[nthUser].email);
+      localStorage.setItem("currentUser", users[nthUser].email);
+      setAuthorized(true);
     } else {
       alert("Unauthorized user");
     }
   };
+
+  useEffect(() => {
+    const currUser = localStorage.getItem("currentUser");
+    if (currUser !== "null" && currUser !== null) {
+      localStorage.setItem("currentUser", currUser);
+      setAuthorized(true);
+    }
+  }, [currentUser]);
 
   return (
     <div className="login">

@@ -9,6 +9,7 @@ export const useGlobalState = () => {
 
 export const GlobalStateProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [authorized, setAuthorized] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [users, setUsers] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -34,6 +35,7 @@ export const GlobalStateProvider = ({ children }) => {
         console.log(error);
       });
   };
+
   //Set currentUser as one save in localStorage
   useEffect(() => {
     const currUser = localStorage.getItem("currentUser");
@@ -42,13 +44,24 @@ export const GlobalStateProvider = ({ children }) => {
     } else {
       setCurrentUser("");
     }
-  }, []);
+  }, [currentUser]);
   useEffect(() => {
     getAllUsers();
-  }, [users]);
+  }, []);
 
   return (
-    <GlobalState.Provider value={{ currentUser, setCurrentUser, users, data, getData, loaded }}>
+    <GlobalState.Provider
+      value={{
+        currentUser,
+        setCurrentUser,
+        users,
+        data,
+        getData,
+        loaded,
+        authorized,
+        setAuthorized,
+      }}
+    >
       {children}
     </GlobalState.Provider>
   );
