@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useReducer, useState } from "react";
 import { AiFillCheckCircle, AiFillMinusCircle, AiOutlineDelete } from "react-icons/ai";
 import { BiLogOutCircle } from "react-icons/bi";
+import { BsChevronDoubleDown } from "react-icons/bs";
 import { useGlobalState } from "../../context/GlobalState.jsx";
 import Loader from "../Loader/Loader.js";
 import "./Content.css";
@@ -16,7 +17,7 @@ interface Types {
 const Content: React.FC = () => {
   const [isClicked, setIsClicked] = useState(false);
   const { currentUser, setCurrentUser, setAuthorized } = useGlobalState();
-  const initialState = { username: "", availability: false };
+  const initialState = { username: "", availability: null };
   const [account, setAccount] = useReducer(
     (account, updates) => ({
       ...account,
@@ -33,7 +34,7 @@ const Content: React.FC = () => {
   if (currentUser && currentUser !== "" && currentUser !== null && currentUser !== undefined) {
     localStorage.setItem("currentUser", currentUser);
   }
-
+  console.log(data);
   return (
     <div className="content">
       <h2 className="greeting">
@@ -53,14 +54,24 @@ const Content: React.FC = () => {
       <h1>Citrix availability</h1>
       {loaded ? (
         <table className="availability-table">
-          <thead>
-            <tr className="table-heading">
-              <td></td>
-              <td>Username</td>
-              <td>Is Available</td>
-              <td></td>
-            </tr>
-          </thead>
+          {data.length > 0 ? (
+            <thead>
+              <tr className="table-heading">
+                <td></td>
+                <td>Username</td>
+                <td>Is Available</td>
+                <td></td>
+              </tr>
+            </thead>
+          ) : (
+            <td>
+              <p>No Data in the table</p>{" "}
+              <p>
+                Add Account <BsChevronDoubleDown style={{ position: "relative", top: "3px" }} />
+              </p>
+            </td>
+          )}
+
           <tbody>
             {data !== null &&
               data.map((item) => {
@@ -124,21 +135,32 @@ const Content: React.FC = () => {
       ) : (
         <Loader />
       )}
-      <button
-        className="add-button"
-        onClick={() => {
-          if (isClicked) {
-            setIsClicked(false);
-          } else {
-            setIsClicked(true);
-          }
-        }}
-      >
-        {isClicked ? "Close" : "Add Account"}
-      </button>
+      <div className="buttons">
+        <button
+          className="add-button"
+          onClick={() => {
+            if (isClicked) {
+              setIsClicked(false);
+            } else {
+              setIsClicked(true);
+            }
+          }}
+        >
+          {isClicked ? "Close" : "Add Account"}
+        </button>
+        <button
+          className="go-to-citrix"
+          onClick={() => {
+            window.location.href = "https://store.dva-assekuranz.de/";
+          }}
+        >
+          Go to Citrix
+        </button>
+      </div>
+
       {isClicked ? (
         <>
-          <h2>Enter new Citrix user</h2>
+          <h2>Add new Citrix user</h2>
           <div className="add-account">
             <input
               type="text"
@@ -149,30 +171,38 @@ const Content: React.FC = () => {
               }}
             />
             <select
+              placeholder="Is Available"
               onChange={(e) => {
                 if (e.target.value === "YES") {
                   setAccount({ availability: true });
                 } else if (e.target.value === "NO") {
                   setAccount({ availability: false });
+                } else {
+                  setAccount({ availability: null });
                 }
               }}
             >
+              <option label="Is Available"></option>
               <option value="NO">NO</option>
               <option value="YES">YES</option>
             </select>
             <button
               onClick={async () => {
-                await axios
-                  .post(`${import.meta.env.VITE_API_URL}/accounts`, {
-                    username: account.username,
-                    isAvailable: account.availability,
-                  })
-                  .then(() => {
-                    setAccount({ username: "", availability: false });
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
+                if (account.username !== "" && account.availability !== null) {
+                  await axios
+                    .post(`${import.meta.env.VITE_API_URL}/accounts`, {
+                      username: account.username,
+                      isAvailable: account.availability,
+                    })
+                    .then(() => {
+                      setAccount({ username: "", availability: false });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                } else {
+                  alert("Enter account username and availability");
+                }
               }}
             >
               Add Account

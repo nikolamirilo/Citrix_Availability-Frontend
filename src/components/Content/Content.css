@@ -110,8 +110,24 @@
 
 .add-button {
   font-size: 1.5rem;
+  width: 200px;
+  height: 40px;
 }
 
+.content .go-to-citrix {
+  font-size: 1.5rem;
+  width: 200px;
+  height: 40px;
+  background-color: rgb(184, 23, 23);
+}
+.content .buttons {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
 .add-account {
   width: 80%;
   display: flex;
@@ -147,9 +163,6 @@
   }
 }
 @media screen and (max-width: 600px) {
-  .app {
-    background-size: contain;
-  }
   .content {
     width: 99%;
   }
@@ -182,8 +195,16 @@
     width: 100%;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .content {
     width: 98%;
+  }
+  .content .buttons {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
   }
 }

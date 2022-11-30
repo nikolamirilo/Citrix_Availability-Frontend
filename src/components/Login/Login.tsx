@@ -5,8 +5,6 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const { users, setCurrentUser, currentUser, setAuthorized } = useGlobalState();
-  console.log(users);
-  console.log(currentUser);
   const handleLogin = () => {
     let nthUser = 0;
     let isAuthorized = false;
@@ -14,11 +12,9 @@ const Login = () => {
       if (email === users[i].email) {
         isAuthorized = true;
         nthUser = i;
-        console.log(nthUser);
       }
     }
     if (isAuthorized) {
-      console.log(users);
       setCurrentUser(users[nthUser].email);
       localStorage.setItem("currentUser", users[nthUser].email);
       setAuthorized(true);
